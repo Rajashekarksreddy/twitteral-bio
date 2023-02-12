@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { AnimatePresence, motion } from "framer-motion";
 import Image from 'next/image'
-import type { NextPage } from "next";
+
 import { Toaster, toast } from "react-hot-toast";
 import { useState } from 'react'
 import DropDown,{ VibeType } from "../components/DropDown";
@@ -10,6 +10,7 @@ import Github from "../components/Github";
 import Header from "../components/Header";
 import LoadingDots from "../components/LoadingDots";
 import ResizablePanel from "../components/ResizablePanel";
+
 
 export default function Home() {
   const [bio,setBio] = useState('')
@@ -25,7 +26,6 @@ export default function Home() {
   e.preventDefault();
   setGeneratedBios("");
   setLoading(true);
-
   const response = await fetch("/api/generate", {
     method: "POST",
     headers: {
@@ -40,6 +40,22 @@ export default function Home() {
     throw new Error(response.statusText);
   }
 
+  // const data = response.body;
+  // if (!data) {
+  //   return;
+  // }
+  // const reader = data.getReader();
+  // const decoder = new TextDecoder();
+  // let done = false;
+
+  // while (!done) {
+  //   const { value, done: doneReading } = await reader.read();
+  //   done = doneReading;
+  //   const chunkValue = decoder.decode(value);
+  //   setGeneratedBios((prev) => prev + chunkValue);
+  // }
+
+  // setLoading(false);
   let answer = await response.json();
   setGeneratedBios(answer.choices[0].text);
   setLoading(false);
@@ -55,7 +71,7 @@ export default function Home() {
     <main className="flex flex-1 w-full flex-col items-center justify-center text-center px-4 mt-12 sm:mt-20">
       <a
         className="flex max-w-fit items-center justify-center space-x-2 rounded-full border border-gray-300 bg-white px-4 py-2 text-sm text-gray-600 shadow-md transition-colors hover:bg-gray-100 mb-5"
-        href="https://github.com/Rajashekarksreddy/twitter-bio"
+        href="https://github.com/Rajashekarksreddy/twitteral-bio"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -89,7 +105,7 @@ export default function Home() {
           rows={4}
           className="w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black my-5"
           placeholder={
-            "e.g. frontend developer at amazon. Tweeting about web development, AI, and React / Next.js. Writing blogs"
+            "e.g. frontend develoepr at amazon, Tweeting about web development, AI, and React / Next.js. Writing blogs"
           }
         />
         <div className="flex mb-5 items-center space-x-3">
